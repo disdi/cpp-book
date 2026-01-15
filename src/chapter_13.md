@@ -1,40 +1,94 @@
 # Chapter 13
 
-## Linked List
+## Smart Pointers
 
-### In C :
+### In C++ (Only) :
+
+//Without Rule of Five
 
 ```
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <memory>
 
 struct Node {
     int data;
-    struct Node* next;
+    float data2;
 };
 
-struct Node* createNode(int data) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = data;
-    newNode->next = NULL;
-    return newNode;
-}
 
-void printList(struct Node* head) {
-    struct Node* curr = head;
-    while (curr != NULL) {
-        printf("%d -> ", curr->data);
-        curr = curr->next;
+class Stack {
+    std::unique_ptr<Node> top;
+public:
+    Stack() : top(std::make_unique<Node>(Node{0, 0.0f})) {}
+    Stack(int x) : top(std::make_unique<Node>(Node{x, 0.0f})) {}
+    Stack(float y) : top(std::make_unique<Node>(Node{0, y})) {}
+
+    // copying now needs to be defined explicitly (or deleted)
+
+    int print_top() {
+        return top->data;
     }
-    printf("NULL\n");
-}
+};
 
 int main() {
-    struct Node* head = NULL;
-    
-    head = createNode(5);
-    printList(head);
+    Stack s1;
+    Stack s2(1);
+    Stack s3(1.0f);
+ 
+    s2.print_top();
+    s3.print_top();
+   
+    return 0;
+}
 
+```
+
+//With Rule of Five
+
+```
+
+#include <iostream>
+#include <memory>
+
+struct Node {
+    int data;
+    float data2;
+};
+
+
+class Stack {
+    std::unique_ptr<Node> top;
+public:
+    Stack() : top(std::make_unique<Node>(Node{0, 0.0f})) {}
+    Stack(int x) : top(std::make_unique<Node>(Node{x, 0.0f})) {}
+    Stack(float y) : top(std::make_unique<Node>(Node{0, y})) {}
+
+    // Stacks shouldn’t be copyable → explicitly delete copying
+    Stack(const Stack&) = delete;
+    Stack& operator=(const Stack&) = delete;
+
+    // but moving is fine:
+    Stack(Stack&&) noexcept = default;
+    Stack& operator=(Stack&&) noexcept = default;
+
+    void print_top() {
+        std::cout << top->data << std::endl;
+        std::cout << top->data2 << std::endl;
+    }
+
+    // No Rule of Three needed; the destructor is automatic and safe.
+};
+
+int main() {
+    Stack s1;
+    Stack s2(1);
+    Stack s3(1.0f);
+ 
+    s2.print_top();
+    s3.print_top();
+   
+    s1 = std::move(s2); 
+    s1.print_top();
 
     return 0;
 }

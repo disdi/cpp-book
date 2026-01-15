@@ -1,11 +1,11 @@
 [book]
 authors = ["Glyn Normington"]
 language = "en"
-multilingual = false
+#multilingual = false
 src = "src"
 title = "The Book of Modern C++"
 
 [output.html]
-curly-quotes = true
+#curly-quotes = true
 git-repository-url = "https://github.com/maverickcasanova/cpp-book"
 site-url = "https://github.com/maverickcasanova/cpp-book/"

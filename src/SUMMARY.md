@@ -14,4 +14,4 @@
 - [Lambda Functions](./chapter_10.md)
 - [Structs and Classes](./chapter_11.md)
 - [Constructors & Destructors](./chapter_12.md)
-- [Link Lists](./chapter_13.md)
+- [Smart Pointers](./chapter_13.md)

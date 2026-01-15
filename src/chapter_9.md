@@ -19,3 +19,18 @@ int main() {
     return 0;
 }
 ```
+
+### Class Templates :
+
+```
+template <typename T>
+class Stack {
+    struct Node {
+        T data;
+    };
+};
+
+int main() {
+    Stack<std::string> a;
+ }
+ ```

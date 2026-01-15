@@ -7,13 +7,12 @@
 ```
 #include <stdio.h>
 
-struct my_struct {
-    int x;
-    int y;
+struct Node {
+    int data;
 };
 
 int main() {
-    struct my_struct object1;
+    struct Node object1;
     object1.x = 1;
     printf("%d\n", object1.x);
     return 0;
@@ -26,13 +25,12 @@ int main() {
 ```
 #include <iostream>
 
-struct my_struct {
-    int x;
-    int y;
+struct Node {
+    int data;
 };
 
 int main() {
-    struct my_struct object1;
+    struct Node object1;
     object1.x = 1;
     std::cout << object1.x << std::endl;
     return 0;
@@ -42,24 +40,21 @@ int main() {
 
 ## Classes (In C++ Only) :
 
+
 ```
 
-#include <iostream>
-
-class human {
-public:
-    int height;
-    int weight;
+class Stack {
+    public:    
+        int data;
 };
 
+
 int main() {
-    human obj;
-    obj.height = 180;
-    obj.weight = 220;
-
-    std::cout << john.height << std::endl;
-
+    Stack n;
+    n.data = 1;
+    std::cout << n.data << std::endl;
     return 0;
 }
+
 
 ```

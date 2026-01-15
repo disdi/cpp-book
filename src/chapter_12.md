@@ -4,78 +4,116 @@
 
 ### In C++ :
 
-```
-#include <iostream>
-
-class human {
-public:
-    int height;
-    int weight;
-    human(int h, int w) {
-        height = h;
-        weight = w;
-    }
-    ~human(){};
-    int get_height() const {
-        return height;
-    }
-    int get_weight() const {
-        return weight;
-    }
-};
-
-int main() {
-    human obj(180, 220);
-    std::cout << obj.get_height() << std::endl;
-    std::cout << obj.get_weight() << std::endl;
-    return 0;
-}
-
-```
-
 #### Access control by Encapsulation
 
 ```
-
 #include <iostream>
 
-class human {
-private: // abstracted from the user
-    int m_h;
-    int m_w;
-public: 
-    human(int h, int w) {
-        m_h = h;
-        m_w = w;
+struct Node {
+    int data;
+};
+
+class Stack {
+private:
+    Node* top;
+
+public:
+    Stack() {
+        top = new Node{0};
     }
-    int get_h() const {
-        return m_h;
+    Stack(int x) {
+        top = new Node{x};
     }
-    int get_w() const {
-        return m_w;
-    }
-    void set_h_w(int h, int w) {
-        m_h = h;
-        m_w = w;
+    ~Stack() {
+        delete top;
     }
 
+    int print_top() {
+        return top->data;
+    }
 };
 
 int main() {
-    human obj(180, 220);
+    Stack s1;
+    Stack s2(1);
 
-    std::cout << obj.get_h() << std::endl;
-    std::cout << obj.get_w() << std::endl;
-    
-    obj.set_h_w(18, 22);
-    
-    std::cout << obj.get_h() << std::endl;
-    std::cout << obj.get_w() << std::endl;
+    std::cout << s2.print_top() << std::endl;
 
     return 0;
 }
 
 ```
+
+#### Polymorphism
+
+```
+#include <iostream>
+
+struct Node {
+    int data;
+    float data2;
+};
+
+class Stack {
+private:
+    Node* top;
+
+public:
+    Stack() {
+        top = new Node{ 0, 0.0f };
+    }
+
+    Stack(int x) {
+        top = new Node{ x, 0.0f };
+    }
+
+    Stack(float y) {
+        top = new Node{ 0, y };
+    }
+
+#if 1    // Rule of Three
+
+    Stack(const Stack& other) {
+        top = new Node(*other.top);
+    }
+
+    Stack& operator=(const Stack& other) {
+        if (this != &other) {
+            delete top;
+            top = new Node(*other.top);
+        }
+        return *this;
+    }
+
+    ~Stack() {
+        delete top;
+    }
+#endif
+    void print_top() {
+        std::cout << top->data << std::endl;
+        std::cout << top->data2 << std::endl;
+    }
+};
+
+int main() {
+    Stack s1;
+    Stack s2(1);
+    Stack s3(1.0f);
+ 
+    s2.print_top();
+    s3.print_top();
+   
+    s1 = s2;
+    s1.print_top();
+
+    s1 = s3;
+    s1.print_top();
+
+    return 0;
+}
+
+```
+
 
 #### Inheritance
 
@@ -128,48 +166,10 @@ int main() {
     return 0;
 }
 
-```
-
-#### Polymorphism
-
 
 ```
 
-#include <iostream>
-
-class human {
-public:
-    int height;
-    float weight;
-    
-    human(int h, int w) {
-        height = h;
-        weight = w;
-    }
-};
-
-//print with int argument
-void print(int x) {
-    std::cout << x << std::endl;
-}
-
-//print with float argument
-void print(float x) {
-    std::cout << x  << std::endl;
-}
-
-int main() {
-    human obj(180, 220);
-    
-    print(obj.height);
-    
-    print(obj.weight);
-    return 0;
-}
-
-```
-
-#### Function Polymorphism
+##### Virtual Functions
 
 
 ```
@@ -225,3 +225,4 @@ int main() {
 }
 
 ```
+
